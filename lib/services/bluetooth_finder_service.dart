@@ -38,6 +38,24 @@ class BluetoothFinderService {
 
   Future<void> stopScan() => FlutterBluePlus.stopScan();
 
+  bool get isScanningNow => FlutterBluePlus.isScanningNow;
+
+  /// Raw stream of scan results, used by the long-running background
+  /// monitor to track when each saved device was last seen.
+  Stream<List<ScanResult>> get scanResultsStream => FlutterBluePlus.scanResults;
+
+  /// Makes sure a long-lived scan is active. flutter_blue_plus stops
+  /// scanning after its `timeout`, so the monitor calls this
+  /// periodically to restart it if needed.
+  Future<void> ensureScanning() async {
+    if (!FlutterBluePlus.isScanningNow) {
+      await FlutterBluePlus.startScan(
+        timeout: const Duration(minutes: 30),
+        continuousUpdates: true,
+      );
+    }
+  }
+
   /// Continuously scans and emits the RSSI of the given device id
   /// whenever it is seen in an advertisement, null if not currently
   /// visible. RSSI ranges roughly from -100 (far/weak) to -30 (very
