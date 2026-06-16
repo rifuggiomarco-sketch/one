@@ -15,8 +15,12 @@ class BluetoothFinderService {
       Permission.bluetoothConnect,
       Permission.locationWhenInUse,
     ].request();
-    return statuses.values.every(
-      (status) => status.isGranted || status.isLimited,
+    // Location is only declared in the manifest up to Android 11
+    // (BLUETOOTH_SCAN uses neverForLocation from Android 12 on), so on
+    // newer devices it can never be granted and must not block scanning.
+    return [Permission.bluetoothScan, Permission.bluetoothConnect].every(
+      (permission) =>
+          statuses[permission]!.isGranted || statuses[permission]!.isLimited,
     );
   }
 
