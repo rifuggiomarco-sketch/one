@@ -1,0 +1,37 @@
+name: rave_finder
+description: "Trova i tuoi amici ai rave e ai festival, anche senza segnale: bonding via codice e bussola con direzione/distanza via rete mesh Bluetooth."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # BLE scanning, used to receive mesh location packets broadcast by other devices
+  flutter_blue_plus: ^1.35.3
+  # BLE advertising, used to broadcast our own location packet and to relay others'
+  flutter_ble_peripheral: ^2.1.1
+  # Live GPS position (works with no cell signal, GPS is satellite-based)
+  geolocator: ^13.0.2
+  # Device compass heading, used to rotate the direction arrow
+  flutter_compass: ^0.8.1
+  # Runtime permission requests (Bluetooth, Location)
+  permission_handler: ^11.3.1
+  # Persist bonded friends and this device's identity locally
+  shared_preferences: ^2.3.3
+  # Share sheet, used to send your bonding code to a friend
+  share_plus: ^11.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
