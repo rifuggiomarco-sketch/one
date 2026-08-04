@@ -1,0 +1,46 @@
+name: Build debug APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/festival-gps-necklace-550guv
+
+jobs:
+  build-debug-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Accept Android SDK licenses
+        run: |
+          yes | flutter doctor --android-licenses || true
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Analyze (optional)
+        run: flutter analyze || true
+
+      - name: Build debug APK
+        run: flutter build apk --debug --no-shrink
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
