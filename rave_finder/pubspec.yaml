@@ -26,7 +26,7 @@ dependencies:
   # Persist bonded friends and this device's identity locally
   shared_preferences: ^2.3.3
   # Share sheet, used to send your bonding code to a friend
-  share_plus: ^10.1.4
+  share_plus: ^11.0.0
 
 dev_dependencies:
   flutter_test:

@@ -166,7 +166,7 @@ class MeshService {
         : null;
 
     final candidates = <MeshPacket>[
-      if (myPacket != null) myPacket,
+      ?myPacket,
       ..._relayQueue.values,
     ];
     if (candidates.isEmpty) return null;
